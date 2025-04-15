@@ -1,0 +1,82 @@
+
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8">
+  <title>Tafeltrainer Spel</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      background: #f0f8ff;
+      padding: 20px;
+    }
+    #question {
+      font-size: 2em;
+      margin: 20px;
+    }
+    input, button {
+      font-size: 1.5em;
+      padding: 10px;
+    }
+    #feedback {
+      margin-top: 15px;
+      font-size: 1.2em;
+    }
+  </style>
+</head>
+<body>
+  <h1>🎲 Tafeltrainer 🎲</h1>
+  <p>Kies een tafel en oefen je sommen!</p>
+  <label for="tafel">Tafel van: </label>
+  <select id="tafel">
+    <option value="2">2</option>
+    <option value="3">3</option>
+    <option value="4">4</option>
+    <option value="5">5</option>
+    <option value="6">6</option>
+    <option value="7">7</option>
+    <option value="8">8</option>
+    <option value="9">9</option>
+    <option value="10">10</option>
+  </select>
+  <button onclick="startSpel()">Start spel</button>
+
+  <div id="spel" style="display:none">
+    <div id="question"></div>
+    <input type="number" id="antwoord" placeholder="Jouw antwoord" />
+    <button onclick="checkAntwoord()">Controleer</button>
+    <div id="feedback"></div>
+  </div>
+
+  <script>
+    let tafel = 2;
+    let getal = 1;
+
+    function startSpel() {
+      tafel = parseInt(document.getElementById("tafel").value);
+      getal = Math.floor(Math.random() * 10) + 1;
+      document.getElementById("spel").style.display = "block";
+      document.getElementById("feedback").innerText = "";
+      stelVraag();
+    }
+
+    function stelVraag() {
+      document.getElementById("question").innerText = `${tafel} x ${getal} = ?`;
+      document.getElementById("antwoord").value = "";
+    }
+
+    function checkAntwoord() {
+      const antwoord = parseInt(document.getElementById("antwoord").value);
+      const juist = tafel * getal;
+      if (antwoord === juist) {
+        document.getElementById("feedback").innerText = "Goed zo! 🎉";
+      } else {
+        document.getElementById("feedback").innerText = `Oeps! Het juiste antwoord is ${juist}.`;
+      }
+      getal = Math.floor(Math.random() * 10) + 1;
+      setTimeout(stelVraag, 1500);
+    }
+  </script>
+</body>
+</html>
